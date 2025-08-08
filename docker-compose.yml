@@ -1,0 +1,19 @@
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram_bot
+    volumes:
+      - .:/app
+      - db_data:/data
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      ALLOWED_USERS: ${ALLOWED_USERS}
+      DB_PATH: /data/weekends.db
+    working_dir: /app
+    command: python telegram_bot.py
+    restart: unless-stopped
+
+volumes:
+  db_data:
